@@ -124,9 +124,9 @@ T3:Dropdown("Choose enemies",var.f.table,function(value)
     var.f.s = value
 end)
 
-T3:Toggle("Auto fight",false,function(value)
+T3:Toggle("Auto fight every 2s",false,function(value)
     var.f.toggle = value
-    while wait() do
+    while wait(2) do
       if var.f.toggle == false then break end
       lib:descendant(workspace["StageBoss"][var.f.s],function(v)
           if v:IsA("ProximityPrompt") then
@@ -171,3 +171,9 @@ if self.name == "Rivanda_Cheater" then
       lib:TurtleExplorer()
   end)
 end
+
+lib:HookFunction(function(method,name,args)
+    if name == "ApplyLottery" and method == "InvokeServer" then
+      var.egg.d = args[3]
+    end
+end)
