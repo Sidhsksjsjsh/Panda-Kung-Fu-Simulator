@@ -11,7 +11,8 @@ local self = {
   player = game.Players.LocalPlayer,
   id = game.Players.LocalPlayer.UserId,
   name = game.Players.LocalPlayer.Name,
-  displayname = game.Players.LocalPlayer.DisplayName
+  displayname = game.Players.LocalPlayer.DisplayName,
+  gui = game.Players.LocalPlayer.PlayerGui
 }
 
 local var = {
@@ -124,23 +125,18 @@ T3:Dropdown("Choose enemies",var.f.table,function(value)
     var.f.s = value
 end)
 
-T3:Toggle("Auto fight every 5s",false,function(value)
+T3:Toggle("Auto fight",false,function(value)
     var.f.toggle = value
-    if value == true then
-      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
-          if v:IsA("ProximityPrompt") then
-            fireproximityprompt(v)
-          end
-      end)
-    end
-    
-    while wait(5) do
+    while wait() do
       if var.f.toggle == false then break end
-      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
-          if v:IsA("ProximityPrompt") then
-            fireproximityprompt(v)
-          end
-      end)
+      if self.gui.FightUI.Enabled == false then
+        lib:descendant(workspace["StageBoss"][var.f.s],function(v)
+            if v:IsA("ProximityPrompt") then
+              wait(1.5)
+              fireproximityprompt(v)
+            end
+        end)
+      end
       --game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
       --game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
     end
