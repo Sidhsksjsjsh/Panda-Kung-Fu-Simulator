@@ -141,7 +141,7 @@ T4:Dropdown("Choose ability slots",var.ability.table,function(value)
     var.ability.s = value
 end)
 
-T4:Toggle("Auto click [ High Damage ]",false,function(value)
+T4:Toggle("Auto upgrade",false,function(value)
     var.ability.toggle = value
     while wait() do
       if var.ability.toggle == false then break end
