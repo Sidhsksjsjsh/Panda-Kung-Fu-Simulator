@@ -124,23 +124,31 @@ T3:Dropdown("Choose enemies",var.f.table,function(value)
     var.f.s = value
 end)
 
-T3:Toggle("Auto fight every 2s",false,function(value)
+T3:Toggle("Auto fight every 5s",false,function(value)
     var.f.toggle = value
-    while wait(2) do
+    if value == true then
+      game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
+      game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
+    end
+    
+    while wait(5) do
       if var.f.toggle == false then break end
-      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
+      --[[lib:descendant(workspace["StageBoss"][var.f.s],function(v)
           if v:IsA("ProximityPrompt") then
             fireproximityprompt(v)
           end
-      end)
+      end)]]
+      game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
+      game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
     end
 end)
 
-T3:Toggle("Auto click [ High Damage ]",false,function(value)
+T3:Toggle("Auto click critical",false,function(value)
     var.f.c = value
     while wait() do
       if var.f.c == false then break end
       game:GetService("ReplicatedStorage")["Fight"]["Remote"]["SubmitPlayerOperation"]:InvokeServer({["DamageEnegry"] = 9e9})
+      game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["TryToAddEnegryByPlayer"]:Invoke()
     end
 end)
 
