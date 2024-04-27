@@ -15,7 +15,7 @@ local var = {
   reb = false,
   egg = {
     table = {},
-    s = "egg_1",
+    s = "C10",
     toggle = false,
     d = {}
   },
