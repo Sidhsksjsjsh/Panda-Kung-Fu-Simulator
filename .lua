@@ -3,6 +3,7 @@ local wndw = lib:Window("VIP Turtle Hub V4")
 local T1 = wndw:Tab("Main")
 local T2 = wndw:Tab("Egg")
 local T3 = wndw:Tab("Fight")
+local T4 = wndw:Tab("Ability Upgrader")
 
 local workspace = game:GetService("Workspace")
 
@@ -23,6 +24,11 @@ local var = {
     s = "10001",
     toggle = false,
     c = false
+  },
+  ability = {
+    table = {"1","2","3","4"},
+    s = "1",
+    toggle = false
   }
 }
 
@@ -115,7 +121,11 @@ T3:Toggle("Auto fight",false,function(value)
     var.f.toggle = value
     while wait() do
       if var.f.toggle == false then break end
-      game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
+      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
+          if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+          end
+      end)
     end
 end)
 
@@ -124,5 +134,17 @@ T3:Toggle("Auto click [ High Damage ]",false,function(value)
     while wait() do
       if var.f.c == false then break end
       game:GetService("ReplicatedStorage")["Fight"]["Remote"]["SubmitPlayerOperation"]:InvokeServer({["DamageEnegry"] = 9e9})
+    end
+end)
+
+T4:Dropdown("Choose ability slots",var.ability.table,function(value)
+    var.ability.s = value
+end)
+
+T4:Toggle("Auto click [ High Damage ]",false,function(value)
+    var.ability.toggle = value
+    while wait() do
+      if var.ability.toggle == false then break end
+      game:GetService("ReplicatedStorage")["Ability"]["Remote"]["TryUpgradeAbility"]:InvokeServer(var.ability.s)
     end
 end)
