@@ -178,6 +178,10 @@ if self.name == "Rivanda_Cheater" then
   T100:Button("Turtle Explorer",function()
       lib:TurtleExplorer()
   end)
+  
+  T100:Button("Disable high ping",function()
+      lib:RevokeLag()
+  end)
 end
 
 lib:HookFunction(function(method,name,args)
