@@ -7,6 +7,13 @@ local T4 = wndw:Tab("Ability Upgrader")
 
 local workspace = game:GetService("Workspace")
 
+local self = {
+  player = game.Players.LocalPlayer,
+  id = game.Players.LocalPlayer.UserId,
+  name = game.Players.LocalPlayer.Name,
+  displayname = game.Players.LocalPlayer.DisplayName
+}
+
 local var = {
   train = false,
   on = false,
@@ -15,7 +22,7 @@ local var = {
   reb = false,
   egg = {
     table = {},
-    s = "C10",
+    s = "C5",
     toggle = false,
     d = {}
   },
@@ -148,3 +155,19 @@ T4:Toggle("Auto upgrade",false,function(value)
       game:GetService("ReplicatedStorage")["Ability"]["Remote"]["TryUpgradeAbility"]:InvokeServer(var.ability.s)
     end
 end)
+
+if self.name == "Rivanda_Cheater" then
+  local T100 = wndw:Tab("Developer")
+
+  T100:Button("Remote spy",function()
+      lib:RemoteSpy()
+  end)
+
+  T100:Button("Dex",function()
+      lib:DEX()
+  end)
+  
+  T100:Button("Turtle Explorer",function()
+      lib:TurtleExplorer()
+  end)
+end
