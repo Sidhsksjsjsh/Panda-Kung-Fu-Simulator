@@ -127,19 +127,22 @@ end)
 T3:Toggle("Auto fight every 5s",false,function(value)
     var.f.toggle = value
     if value == true then
-      game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
-      game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
+      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
+          if v:IsA("ProximityPrompt") then
+            fireproximityprompt(v)
+          end
+      end)
     end
     
     while wait(5) do
       if var.f.toggle == false then break end
-      --[[lib:descendant(workspace["StageBoss"][var.f.s],function(v)
+      lib:descendant(workspace["StageBoss"][var.f.s],function(v)
           if v:IsA("ProximityPrompt") then
             fireproximityprompt(v)
           end
-      end)]]
-      game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
-      game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
+      end)
+      --game:GetService("ReplicatedStorage")["Fight"]["BindAble"]["ApplyFight"]:Invoke(var.f.s)
+      --game:GetService("ReplicatedStorage")["Fight"]["Remote"]["ApplyFight"]:InvokeServer(var.f.s)
     end
 end)
 
